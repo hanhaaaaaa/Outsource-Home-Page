@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
+import { appRoutes } from "./router";
+import "./assets/styles/index.scss";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      {appRoutes.map((r, index) => {
+        return (
+          <Route
+            path={r.path}
+            key={index}
+            exact={r.exact}
+            render={() => {
+              return <r.component />
+            }}
+          />
+        );
+      })}
+      <Redirect to="/404" />
+    </Switch>
   );
 }
 
-export default App;
+export default withRouter(App);
